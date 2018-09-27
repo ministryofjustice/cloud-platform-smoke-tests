@@ -1,0 +1,20 @@
+#!/bin/bash
+
+log() {
+  _fg=''
+  [ "${1}" = "red" ] && _fg='\033[0;31m'
+  [ "${1}" = "green" ] && _fg='\033[0;32m'
+  shift
+  
+  echo "${_fg}>>> ${@}\033[0m"
+}
+
+
+namespace="${1}"
+github_team="${2}"
+
+if kubectl auth can-i get pods --namespace "${namespace}" --as=test --as-group=github:"${github_team}" | grep  -q "yes"; then
+    log green "you have access to this pod in this namespace"
+else
+    log red "You do not have access to this pod in this namespace"
+fi
