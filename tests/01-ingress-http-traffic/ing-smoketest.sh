@@ -8,15 +8,13 @@ kubectl -n ingress-smoketest apply -f ./ingress-smoketest.yaml
 
 sleep 3
 
-#set -e
-curl -f -s -o /dev/null https://iingress-smoketest-app.apps.cloud-platform-test-1.k8s.integration.dsd.io 
-echo $?
+output=$(curl -s -o /dev/null -w "%{http_code}" https://iingress-smoketest-app.apps.cloud-platform-test-1.k8s.integration.dsd.io)
 
-use $?
+echo $output
 
-if [ $? -eq 0 ]; 
+if [ "$output" -eq 200 ]; 
 then
-    echo "Ingress Test Successfull"
+    echo "Ingress Test Successfull!"
     kubectl delete namespace ingress-smoketest
     exit 0
 else
