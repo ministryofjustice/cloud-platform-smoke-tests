@@ -42,3 +42,4 @@ spec:
         backend:
           serviceName: ingress-smoketest-svc
           servicePort: 80
+          
