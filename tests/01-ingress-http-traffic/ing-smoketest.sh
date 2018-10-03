@@ -19,6 +19,8 @@ then
     exit 0
 else
     echo "Ingress Test Failed!"
+    eoutput=$(curl -s -o -v /dev/null https://ingress-smoketest-app.apps.cloud-platform-test-1.k8s.integration.dsd.io)
+    echo $eoutput
     exit 1
 fi;
 
