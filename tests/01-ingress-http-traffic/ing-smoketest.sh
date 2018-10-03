@@ -6,7 +6,7 @@ sleep 3
 
 kubectl -n ingress-smoketest apply -f ./ingress-smoketest.yaml
 
-sleep 3
+sleep 15
 
 output=$(curl -s -o /dev/null -w "%{http_code}" https://ingress-smoketest-app.apps.cloud-platform-test-1.k8s.integration.dsd.io)
 
