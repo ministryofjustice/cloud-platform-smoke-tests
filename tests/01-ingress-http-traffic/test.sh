@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo Start Ingress Smoke Test....
+
 kubectl create namespace ingress-smoketest
 
 sleep 3
@@ -16,11 +18,13 @@ if [ "$output" -eq 200 ];
 then
     echo "Ingress Test Successfull!"
     kubectl delete namespace ingress-smoketest
+    echo End of Ingress Smoke Test
     exit 0
 else
     echo "Ingress Test Failed!"
     eoutput=$(curl -s -o -v /dev/null https://ingress-smoketest-app.apps.cloud-platform-test-1.k8s.integration.dsd.io)
     echo $eoutput
+    echo End of Ingress Smoke Test
     exit 1
 fi;
 
