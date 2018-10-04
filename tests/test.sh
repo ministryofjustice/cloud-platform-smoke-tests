@@ -29,7 +29,7 @@ export curlresult=$(curl -s -XGET http://search-cloud-platform-test-o2m2taivvjpo
         },
         {
           "match": {
-            "kubernetes.pod_name": "'"$pod_name"'" 
+            "kubernetes.pod_name.keyword": "'"$pod_name"'" 
           }
         }
       ]
