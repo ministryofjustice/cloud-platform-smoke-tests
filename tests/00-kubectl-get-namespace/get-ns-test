@@ -1,10 +1,47 @@
 #!/bin/bash
 
-namespace="$1"
-github_team="$2"
+echo "Starting Namespace Smoke Test"
 
-if kubectl auth can-i get namespace --namespace "${namespace}" --as=test --as-group=github:"${github_team}" | grep  -q "yes"; then
-    echo "namespace exists"
+if kubectl auth can-i get pods --namespace kube-system --as test --as-group github:webops --as-group system:authenticated | grep  -q "yes"; then
+    echo "Passed >>> WebOps has access to kube system."
 else
-    echo "namespace does not exist or you do not have access"
+    echo "Failed >>> WebOps has no access to kube system."
 fi
+
+kubectl auth can-i get pods --namespace ingress-controller --as test --as-group github:crime-billing-online --as-group system:authenticated
+
+kubectl auth can-i get namespace --namespace kube-system --as test --as-group github:webops --as-group system:authenticated
+
+kubectl auth can-i get namespace --namespace kube-system --as test --as-group github:crime-billing-online --as-group system:authenticated
+
+
+echo "Starting Namespace Smoke Test"
+echo "Testing WebOps group access to kube system"
+
+if kubectl auth can-i get namespace --namespace kube-system --as test --as-group github:webops --as-group system:authenticated | grep -q "yes"  && 
+   kubectl auth can-i get pods --namespace kube-system --as test --as-group github:webops --as-group system:authenticated | grep -q "yes"; then
+   echo "Passed >>> WebOps has access to kube-system namespace and pods"
+else
+   echo "Failed >>> WebOps has no access to kube-system namespace and pods"
+fi
+
+echo "Testing Developer team access to Kube system namespace and pods"
+
+if kubectl auth can-i get namespace --namespace kube-system --as test --as-group github:crime-billing-online --as-group system:authenticated | grep -q "no" &&
+   kubectl auth can-i get pods --namespace kube-system --as test --as-group github:crime-billing-online --as-group system:authenticated | grep -q "no"; then
+   echo "Passed >>> Developer Team does not have access to kube-system namespace and pods"
+else
+   echo "Failed >>> Developer Team has access to kube-system namespace and pods"
+fi
+
+echo "Testing Developer team access to their namespace and pods"
+
+if kubectl auth can-i get namespace --namespace kube-system --as test --as-group github:crime-billing-online --as-group system:authenticated | grep -q "yes" &&
+   kubectl auth can-i get pods --namespace kube-system --as test --as-group github:crime-billing-online --as-group system:authenticated | grep -q "yes"; then
+   echo "Passed >>> Developer Team has access to their namespace and pods"
+else
+   echo "Failed >>> Developer Team has no access to their namespace and pods"
+fi
+
+echo "Namespace test over"
+
