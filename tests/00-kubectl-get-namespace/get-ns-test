@@ -1,21 +1,6 @@
 #!/bin/bash
 
 echo "Starting Namespace Smoke Test"
-
-if kubectl auth can-i get pods --namespace kube-system --as test --as-group github:webops --as-group system:authenticated | grep  -q "yes"; then
-    echo "Passed >>> WebOps has access to kube system."
-else
-    echo "Failed >>> WebOps has no access to kube system."
-fi
-
-kubectl auth can-i get pods --namespace ingress-controller --as test --as-group github:crime-billing-online --as-group system:authenticated
-
-kubectl auth can-i get namespace --namespace kube-system --as test --as-group github:webops --as-group system:authenticated
-
-kubectl auth can-i get namespace --namespace kube-system --as test --as-group github:crime-billing-online --as-group system:authenticated
-
-
-echo "Starting Namespace Smoke Test"
 echo "Testing WebOps group access to kube system"
 
 if kubectl auth can-i get namespace --namespace kube-system --as test --as-group github:webops --as-group system:authenticated | grep -q "yes"  && 
