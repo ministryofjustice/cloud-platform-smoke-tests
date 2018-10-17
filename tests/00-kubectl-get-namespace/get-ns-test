@@ -21,8 +21,8 @@ fi
 
 echo "Testing Developer team access to their namespace and pods"
 
-if kubectl auth can-i get namespace --namespace kube-system --as test --as-group github:crime-billing-online --as-group system:authenticated | grep -q "yes" &&
-   kubectl auth can-i get pods --namespace kube-system --as test --as-group github:crime-billing-online --as-group system:authenticated | grep -q "yes"; then
+if kubectl auth can-i get namespace --namespace laa-apply-for-legalaid-staging --as test --as-group github:crime-billing-online --as-group system:authenticated | grep -q "yes" &&
+   kubectl auth can-i get pods --namespace laa-apply-for-legalaid-staging --as test --as-group github:crime-billing-online --as-group system:authenticated | grep -q "yes"; then
    echo "Passed >>> Developer Team has access to their namespace and pods"
 else
    echo "Failed >>> Developer Team has no access to their namespace and pods"
