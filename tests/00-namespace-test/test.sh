@@ -34,8 +34,8 @@ sleep 3
 
 echo "Testing Developer team access to their namespace and pods"
 
-if kubectl auth can-i get namespace --namespace laa-apply-for-legalaid-staging --as test --as-group github:apply-for-legalaid --as-group system:authenticated | grep -q "yes" &&
-   kubectl auth can-i get pods --namespace laa-apply-for-legalaid-staging --as test --as-group github:apply-for-legalaid --as-group system:authenticated | grep -q "yes"; then
+if kubectl auth can-i get namespace --namespace laa-apply-for-legalaid-staging --as test --as-group github:laa-apply-for-legal-aid --as-group system:authenticated | grep -q "yes" &&
+   kubectl auth can-i get pods --namespace laa-apply-for-legalaid-staging --as test --as-group github:laa-apply-for-legal-aid --as-group system:authenticated | grep -q "yes"; then
    sleep 3
    echo "Passed >>> Developer Team has access to their namespace and pods"
 else
