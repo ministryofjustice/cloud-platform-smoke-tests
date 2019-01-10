@@ -6,7 +6,7 @@ kubectl create namespace ingress-smoketest
 
 sleep 3
 
-kubectl -n ingress-smoketest apply -f ./resources/ingress-smoketest.yaml
+kubectl -n ingress-smoketest apply -f ./ingress-smoketest.yaml
 
 sleep 15
 
