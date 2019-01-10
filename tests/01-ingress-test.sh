@@ -6,7 +6,7 @@ kubectl create namespace ingress-smoketest
 
 sleep 3
 
-kubectl -n ingress-smoketest apply -f ./ingress-smoketest.yaml
+kubectl -n ingress-smoketest apply -f ./resources/ingress-smoketest.yaml
 
 sleep 15
 
@@ -16,7 +16,7 @@ echo $output
 
 if [ "$output" -eq 200 ]; 
 then
-    echo "Ingress Test Successfull!"
+    echo "Ingress Test Successful!"
     kubectl delete namespace ingress-smoketest
     echo End of Ingress Smoke Test
     exit 0
