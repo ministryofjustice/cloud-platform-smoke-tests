@@ -15,6 +15,7 @@ if kubectl auth can-i get namespace --namespace kube-system --as test --as-group
 else
    sleep 3
    echo "Failed >>> WebOps has no access to kube-system namespace and pods"
+   exit 1
 fi
 
 sleep 3
@@ -28,6 +29,7 @@ if kubectl auth can-i get namespace --namespace kube-system --as test --as-group
 else
    sleep 3
    echo "Failed >>> Developer Team has access to kube-system namespace and pods"
+   exit 1
 fi
 
 sleep 3
@@ -41,6 +43,7 @@ if kubectl auth can-i get namespace --namespace laa-apply-for-legalaid-staging -
 else
    sleep 3
    echo "Failed >>> Developer Team has no access to their namespace and pods"
+   exit 1
 fi
 
 sleep 3
