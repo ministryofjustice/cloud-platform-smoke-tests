@@ -38,6 +38,9 @@ curlresult="$(curl -s -XGET http://search-cloud-platform-test-o2m2taivvjpovbcl63
 
 echo "$curlresult"
 
+kubectl delete pod "$pod_name" -n log-collection-test
+kubectl delete namespace log-collection-test
+
 if [ "$curlresult" == 0 ] 
   then
     echo "Test Failed"
@@ -47,6 +50,4 @@ if [ "$curlresult" == 0 ]
     exit 0
 fi
 
-kubectl delete pod "$pod_name" -n log-collection-test
-kubectl delete namespace log-collection-test
 
