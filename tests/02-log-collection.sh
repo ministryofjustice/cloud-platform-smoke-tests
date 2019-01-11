@@ -44,8 +44,9 @@ if [ "$curlresult" == 0 ]
     exit 1
   else
     echo "Test Passed"
-    kubectl delete pod "$pod_name" -n log-collection-test
-    kubectl delete namespace log-collection-test
     exit 0
 fi
+
+kubectl delete pod "$pod_name" -n log-collection-test
+kubectl delete namespace log-collection-test
 

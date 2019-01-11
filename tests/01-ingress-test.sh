@@ -12,7 +12,7 @@ sleep 15
 
 output=$(curl -s -o /dev/null -w "%{http_code}" https://ingress-smoketest-app.apps.cloud-platform-live-0.k8s.integration.dsd.io)
 
-echo $output
+echo "$output"
 
 if [ "$output" -eq 200 ]; 
 then
@@ -23,7 +23,7 @@ then
 else
     echo "Ingress Test Failed!"
     eoutput=$(curl -s -o -v /dev/null https://ingress-smoketest-app.apps.cloud-platform-test-1.k8s.integration.dsd.io)
-    echo $eoutput
+    echo "$eoutput"
     echo End of Ingress Smoke Test
     exit 1
 fi;
