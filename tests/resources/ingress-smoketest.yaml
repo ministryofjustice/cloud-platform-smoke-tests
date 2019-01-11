@@ -35,7 +35,7 @@ metadata:
   name: ingress-smoketest-app-ing
 spec:
   rules:
-  - host: ingress-smoketest-app.apps.cloud-platform-test-1.k8s.integration.dsd.io
+  - host: ingress-smoketest-app.apps.cloud-platform-live-0.k8s.integration.dsd.io
     http:
       paths:
       - path: /
