@@ -15,6 +15,3 @@ workflows:
   workflow:
     jobs:
       - shellcheck
-          filters:
-            branches:
-              only: master
