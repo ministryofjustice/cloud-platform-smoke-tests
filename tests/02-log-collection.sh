@@ -1,7 +1,7 @@
 #!/bin/bash
 
 kubectl create namespace log-collection-test
-kubectl run wordpress --image wordpress -n log-collection-test
+kubectl run nginx --image nginx -n log-collection-test
 
 while true ; do 
     echo "Working..."
