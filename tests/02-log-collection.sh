@@ -5,6 +5,7 @@ kubectl create namespace log-collection-test
 kubectl run nginx --image wordpress -n log-collection-test
 
 while true ; do 
+    sleep 1
     echo "Working..."
     result="$(kubectl describe pods -n log-collection-test | grep 'Pending')"
   if [[ -z $result ]] ; then 
@@ -24,7 +25,7 @@ curlresult="$(curl -s -XGET https://search-cloud-platform-live-7qrzc26xexgxtkt5q
       "must": [
         {
           "match": {
-            "kubernetes.namespace_name": "log-collection-test"
+            "kubernetes.namespace_name.keyword": "log-collection-test"
           }
         },
         {
@@ -49,5 +50,3 @@ else
   echo "Test Failed"
   exit 1
 fi
-
-
