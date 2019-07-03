@@ -6,33 +6,56 @@ describe "namespace" do
     `kubectl auth can-i get #{type} --namespace #{namespace} --as test --as-group github:#{team} --as-group system:authenticated`.chomp
   end
 
-  it "allows webops to access namespace" do
-    result = can_i_get "namespace", "webops"
-    expect(result).to eq("yes")
-  end
-  
-  it "does not allow non-webops to access namespace" do
-    result = can_i_get "namespace", "not-webops"
-    expect(result).to eq("no")
+  context "when group is webops" do
+    let(:group) { "webops" }
+
+    it "allows webops to access namespace" do
+      result = can_i_get "namespace", group
+      expect(result).to eq("yes")
+    end
+   
+    it "allows webops to access pods" do
+      result = can_i_get "pod", group
+      expect(result).to eq("yes")
+    end
   end
 
-  it "allows webops to access pods" do
-    result = can_i_get "pod", "webops"
-    expect(result).to eq("yes")
+
+  context "when group is not webops" do
+    let(:group) { "not-webops" }
+
+
+    it "does not allow non-webops to access namespace" do
+      result = can_i_get "namespace", group
+      expect(result).to eq("no")
+    end
+
+    it "does not allow non-webops to access pods" do
+      result = can_i_get "pod", group
+      expect(result).to eq("no")
+    end
+   
   end
-  
-  it "does not allow non-webops to access pods" do
-    result = can_i_get "pod", "not-webops"
-    expect(result).to eq("no")
+
+  context "when group is test-webops" do 
+    before(:all) do
+      apply_template_file(
+        namespace: "smoketest-namespace",
+        file: 'spec/fixtures/namespace-smoketest.yaml.erb'
+        binding: binding()
+      )
+
+      it "allows non-webops to access pods" do
+        result = can_i_get "pod", "offender-management", "offender-management-staging"
+        expect(result).to eq("yes")
+      end
+
+      it "allows non-webops to access namespace" do
+        result = can_i_get "namespace", "offender-management", "offender-management-staging"
+        expect(result).to eq("yes")
+      end
+    end
+
   end
-  
-  it "allows non-webops to access pods" do
-    result = can_i_get "pod", "offender-management", "offender-management-staging"
-    expect(result).to eq("yes")
-  end
-  
-  it "allows non-webops to access namespace" do
-    result = can_i_get "namespace", "offender-management", "offender-management-staging"
-    expect(result).to eq("yes")
-  end
+
 end
