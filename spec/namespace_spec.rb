@@ -18,12 +18,11 @@ describe "namespace" do
       result = can_i_get "pod", group
       expect(result).to eq("yes")
     end
+  
   end
-
 
   context "when group is not webops" do
     let(:group) { "not-webops" }
-
 
     it "does not allow non-webops to access namespace" do
       result = can_i_get "namespace", group
@@ -39,23 +38,23 @@ describe "namespace" do
 
   context "when group is test-webops" do 
     before(:all) do
-      apply_template_file(
+      apply_yaml_file(
         namespace: "smoketest-namespace",
-        file: 'spec/fixtures/namespace-smoketest.yaml.erb'
-        binding: binding()
+        file: 'spec/fixtures/namespace-smoketest.yaml'
       )
 
       it "allows non-webops to access pods" do
-        result = can_i_get "pod", "offender-management", "offender-management-staging"
+        result = can_i_get "pod", "test-webops", "smoketest-namespace"
         expect(result).to eq("yes")
       end
 
       it "allows non-webops to access namespace" do
-        result = can_i_get "namespace", "offender-management", "offender-management-staging"
+        result = can_i_get "namespace", "test-webops", "smoketest-namespace"
         expect(result).to eq("yes")
       end
+    
     end
-
+  
   end
 
 end
