@@ -28,6 +28,16 @@ def apply_template_file(args)
   renderer = ERB.new(File.read file)
   yaml = renderer.result(binding)
 
+  apply_yaml(namespace, yaml)
+end
+
+def apply_yaml_file(args)
+  namespace = args.fetch(:namespace)
+  file = args.fetch(:file)
+  apply_yaml(namespace, File.read(file))
+end
+
+def apply_yaml(namespace, yaml)
   `kubectl -n #{namespace} apply -f - <<EOF\n#{yaml}\nEOF\n`
 end
 
