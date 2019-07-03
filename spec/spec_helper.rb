@@ -98,3 +98,8 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+require 'open-uri'
+require 'pry-byebug'
+require 'kubernetes_helper'
+require 'erb'
