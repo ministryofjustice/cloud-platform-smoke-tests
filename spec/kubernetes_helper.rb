@@ -17,6 +17,11 @@ def delete_namespace(namespace)
   `kubectl delete namespace #{namespace}`
 end
 
+def create_job(namespace, yaml_file, job_name)
+  `kubectl -n #{namespace} create -f #{yaml_file}`
+  wait_for(namespace, 'job', job_name)
+end
+
 def delete_deployment(namespace, deployment)
   `kubectl -n #{namespace} delete deployment #{deployment}`
 end
