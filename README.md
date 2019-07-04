@@ -1,17 +1,7 @@
 # cloud-platform-smoke-tests
-Smokes tests for the new cloud-platform
 
+Smoke tests for kubernetes clusters
 
-1) Namespace Smoke Test: 
-   
-   a) Verify WebOps has access to kube-system namespace and pods
-   b) Verify Developer Team does not have access to kube-system namespace and pods
-   c) Verify Developer Team has access to their namespace and pods
+See `makefile` for details of how to run.
 
-2) Ingress-test:
-   
-   a) Verify iingress apply Host URL can be accessible.
-
-3) log-collection-test:
-   
-   a) Verify Kubernetes logs can be accessible from elasticsearch.
+Tests tagged 'cluster:live-1' will only work if the current kubernetes config points to the live-1 cluster.
