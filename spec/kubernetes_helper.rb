@@ -4,6 +4,7 @@ def create_namespace(namespace)
 
     10.times do
       break if namespace_exists?(namespace)
+      sleep 1
     end
   end
 end
