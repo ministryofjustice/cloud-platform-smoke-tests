@@ -77,4 +77,12 @@ def execute(command)
   system command
 end
 
+def get_pod_logs(namespace, pod_name)
+  `kubectl -n #{namespace} logs #{pod_name}`
+end
+
+# Get the name of the Nth pod in the namespace
+def get_pod_name(namespace, index)
+  `kubectl get pods -n #{namespace} | awk 'FNR == #{index + 1} {print $1}'`.chomp
+end
 

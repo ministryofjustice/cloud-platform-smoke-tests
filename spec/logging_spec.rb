@@ -3,14 +3,6 @@ require "spec_helper"
 describe "Log collection", cluster: 'live-1' do
   let(:namespace) { "smoketest-logging-#{Time.now.to_i}" }
 
-  def get_pod_logs(namespace, pod_name)
-    `kubectl -n #{namespace} logs #{pod_name}`
-  end
-
-  # Get the name of the Nth pod in the namespace
-  def get_pod_name(namespace, index)
-    `kubectl get pods -n #{namespace} | awk 'FNR == #{index + 1} {print $1}'`.chomp
-  end
 
   before do
     create_namespace(namespace)
