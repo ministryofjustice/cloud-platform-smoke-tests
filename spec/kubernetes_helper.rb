@@ -53,7 +53,10 @@ def object_exists?(namespace, type, name)
   execute("kubectl -n #{namespace} get #{type} #{name} > /dev/null")
 end
 
-def create_job(namespace, yaml_file, job_name)
+def create_job(namespace, yaml_file, args)
+  job_name = args.fetch(:job_name)
+  search_url = args[:search_url]
+
   apply_template_file(namespace: namespace, file: yaml_file, binding: binding)
   wait_for_job_to_start(namespace, job_name)
 end
