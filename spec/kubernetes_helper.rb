@@ -10,7 +10,7 @@ def create_namespace(namespace)
 end
 
 def namespace_exists?(namespace)
-  system("kubectl get namespace #{namespace} > /dev/null 2>&1")
+  execute("kubectl get namespace #{namespace} > /dev/null 2>&1")
 end
 
 def delete_namespace(namespace)
@@ -50,25 +50,31 @@ def wait_for(namespace, type, name, seconds = 10)
 end
 
 def object_exists?(namespace, type, name)
-  system("kubectl -n #{namespace} get #{type} #{name} > /dev/null")
+  execute("kubectl -n #{namespace} get #{type} #{name} > /dev/null")
 end
 
 def create_job(namespace, yaml_file, job_name)
-  `kubectl -n #{namespace} create -f #{yaml_file}`
-  wait_for_job_to_start(namespace)
+  apply_template_file(namespace: namespace, file: yaml_file, binding: binding)
+  wait_for_job_to_start(namespace, job_name)
 end
 
-def wait_for_job_to_start(namespace)
-  command = "kubectl describe pods -n #{namespace} | grep Succeeded > /dev/null"
-  done = system(command)
+def wait_for_job_to_start(namespace, job_name)
+  controlled_by = "Job/#{job_name}"
+  command = "kubectl describe pods -n #{namespace} | grep -B 2 #{controlled_by} | grep Succeeded > /dev/null"
+  done = execute(command)
 
   10.times do
     break if done
     sleep 1
-    done = system(command)
+    done = execute(command)
   end
 
   raise "Job failed to start in #{namespace}" unless done
+end
+
+def execute(command)
+  # puts command
+  system command
 end
 
 
