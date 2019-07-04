@@ -1,7 +1,6 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "namespace" do
-
   def can_i_get(type, team, namespace = "kube-system")
     `kubectl auth can-i get #{type} --namespace #{namespace} --as test --as-group github:#{team} --as-group system:authenticated`.chomp
   end
@@ -13,7 +12,7 @@ describe "namespace" do
       result = can_i_get "namespace", group
       expect(result).to eq("yes")
     end
-   
+
     it "allows webops to access pods" do
       result = can_i_get "pod", group
       expect(result).to eq("yes")
@@ -34,13 +33,13 @@ describe "namespace" do
     end
   end
 
-  context "when group is test-webops" do 
+  context "when group is test-webops" do
     namespace = "smoketest-namespace-#{Time.now.to_i}"
     before(:all) do
       apply_template_file(
         namespace: namespace,
-        file: 'spec/fixtures/namespace-smoketest.yaml.erb',
-        binding: binding()
+        file: "spec/fixtures/namespace-smoketest.yaml.erb",
+        binding: binding
       )
     end
 

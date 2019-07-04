@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "nginx ingress" do
   let(:cluster_domain) { "apps.live-1.cloud-platform.service.justice.gov.uk" }
@@ -20,10 +20,10 @@ describe "nginx ingress" do
 
       apply_template_file(
         namespace: namespace,
-        file: 'spec/fixtures/ingress-smoketest.yaml.erb',
-        binding: binding()
+        file: "spec/fixtures/ingress-smoketest.yaml.erb",
+        binding: binding
       )
-      wait_for(namespace, 'ingress', 'ingress-smoketest-app-ing')
+      wait_for(namespace, "ingress", "ingress-smoketest-app-ing")
       sleep 7 # Without this, the test fails
     end
 

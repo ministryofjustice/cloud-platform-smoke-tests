@@ -25,7 +25,7 @@ def apply_template_file(args)
   file = args.fetch(:file)
   binding = args.fetch(:binding)
 
-  renderer = ERB.new(File.read file)
+  renderer = ERB.new(File.read(file))
   yaml = renderer.result(binding)
 
   apply_yaml(namespace, yaml)
