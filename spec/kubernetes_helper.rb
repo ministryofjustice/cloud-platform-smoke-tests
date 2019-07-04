@@ -17,11 +17,6 @@ def delete_namespace(namespace)
   `kubectl delete namespace #{namespace}`
 end
 
-def create_job(namespace, yaml_file, job_name)
-  `kubectl -n #{namespace} create -f #{yaml_file}`
-  wait_for(namespace, 'job', job_name)
-end
-
 def delete_deployment(namespace, deployment)
   `kubectl -n #{namespace} delete deployment #{deployment}`
 end
@@ -57,3 +52,23 @@ end
 def object_exists?(namespace, type, name)
   system("kubectl -n #{namespace} get #{type} #{name} > /dev/null")
 end
+
+def create_job(namespace, yaml_file, job_name)
+  `kubectl -n #{namespace} create -f #{yaml_file}`
+  wait_for_job_to_start(namespace)
+end
+
+def wait_for_job_to_start(namespace)
+  command = "kubectl describe pods -n #{namespace} | grep Succeeded > /dev/null"
+  done = system(command)
+
+  10.times do
+    break if done
+    sleep 1
+    done = system(command)
+  end
+
+  raise "Job failed to start in #{namespace}" unless done
+end
+
+
