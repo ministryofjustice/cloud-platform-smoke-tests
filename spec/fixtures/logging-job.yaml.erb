@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: smoketest-logging-job
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: nginx
+        image: bitnami/nginx
+        command: ["curl", "-s", "-XGET", "https://search-cloud-platform-live-dibidbfud3uww3lpxnhj2jdws4.eu-west-2.es.amazonaws.com/logstash-2019.07.04/_search", "-H", 'Content-Type: application/json', "-d", '{ "query": { "bool": { "must": [ { "match": { "kubernetes.namespace_name.keyword": "smoketest-logging" } } ] } } }']
