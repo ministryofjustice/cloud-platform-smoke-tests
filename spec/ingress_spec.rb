@@ -9,7 +9,7 @@ describe "nginx ingress" do
   context "when ingress is not deployed" do
     it "fails http get" do
       expect {
-        open(url)
+        URI.open(url)
       }.to raise_error(OpenURI::HTTPError)
     end
   end
@@ -32,7 +32,7 @@ describe "nginx ingress" do
     end
 
     it "returns 200 for http get" do
-      result = open(url)
+      result = URI.open(url)
       expect(result.status).to eq(["200", "OK"])
     end
   end
