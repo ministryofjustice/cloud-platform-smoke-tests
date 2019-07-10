@@ -11,9 +11,9 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx
+        image: bitnami/nginx
         ports:
-        - containerPort: 80
+        - containerPort: 8080
 ---
 kind: Service
 apiVersion: v1
@@ -25,7 +25,7 @@ spec:
   ports:
   - port: 80
     name: http
-    targetPort: 80
+    targetPort: 8080
   selector:
     app: ingress-smoketest-app
 ---
@@ -34,12 +34,15 @@ kind: Ingress
 metadata:
   name: ingress-smoketest-app-ing
 spec:
+  tls:
+  - hosts:
+    - <%= host %>
   rules:
-  - host: ingress-smoketest-app.apps.cloud-platform-live-0.k8s.integration.dsd.io
+  - host: <%= host %>
     http:
       paths:
       - path: /
         backend:
           serviceName: ingress-smoketest-svc
           servicePort: 80
-          
+
