@@ -11,6 +11,7 @@ push:
 shell:
 	docker run --rm -it \
 		-v $(KUBE_CONFIG):/app/config \
+		-v $${PWD}/spec:/app/spec \
 		-e KUBECONFIG=/app/config
 	$(IMAGE) sh
 
@@ -18,6 +19,7 @@ shell:
 test:
 	docker run --rm \
 		-v $(KUBE_CONFIG):/app/config \
+		-v $${PWD}/spec:/app/spec \
 		-e KUBECONFIG=/app/config \
 	$(IMAGE) rspec
 
@@ -25,6 +27,7 @@ test:
 test-live-1:
 	docker run --rm \
 		-v $(KUBE_CONFIG):/app/config \
+		-v $${PWD}/spec:/app/spec \
 		-e KUBECONFIG=/app/config \
 		$(IMAGE) rspec --tag cluster:live-1
 
@@ -32,5 +35,6 @@ test-live-1:
 test-non-live-1:
 	docker run --rm \
 		-v $(KUBE_CONFIG):/app/config \
+		-v $${PWD}/spec:/app/spec \
 		-e KUBECONFIG=/app/config \
 		$(IMAGE) rspec --tag ~cluster:live-1
