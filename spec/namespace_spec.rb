@@ -24,12 +24,12 @@ describe "namespace" do
 
     it "does not allow non-webops to access namespace" do
       result = can_i_get "namespace", group
-      expect(result).to eq("no")
+      expect(result).to eq("no - no RBAC policy matched")
     end
 
     it "does not allow non-webops to access pods" do
       result = can_i_get "pod", group
-      expect(result).to eq("no")
+      expect(result).to eq("no - no RBAC policy matched")
     end
   end
 
