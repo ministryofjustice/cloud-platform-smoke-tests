@@ -12,14 +12,12 @@ describe "custom error pages" do
       }.to raise_error(OpenURI::HTTPError, "404 Not Found")
     end
 
-    it "serves a custom error page" do
+    it "serves a 404 response" do
       begin
         URI.open(url)
       rescue OpenURI::HTTPError => e
         body = e.io.string
-        # We assume that, if the page body contains this string,
-        # then it's our custom error page
-        expect(body).to match(/design-system.service.gov.uk/)
+        expect(body).to eq("404 page not found\n")
       end
     end
   end
