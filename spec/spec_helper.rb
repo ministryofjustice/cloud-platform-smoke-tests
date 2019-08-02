@@ -99,7 +99,7 @@ end
 
 require "open-uri"
 require "pry-byebug"
-require "kubernetes_helper"
 require "erb"
 require "json"
 require "date"
+require "./spec/kubernetes_helper"
