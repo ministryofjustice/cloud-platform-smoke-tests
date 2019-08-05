@@ -13,8 +13,8 @@ describe "namespaces" do
       .filter {|i| i[1] == 0 }
       .map {|i| i[0]}
 
-    # The default namespace is allowed to not have annotations
-    unannotated_namespaces.delete "default"
+    # These namespaces are allowed to not have annotations
+    %w(default kube-public).map { |ns| unannotated_namespaces.delete(ns) }
 
     expect(unannotated_namespaces).to eq([])
   end
